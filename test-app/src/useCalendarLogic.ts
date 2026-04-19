@@ -21,9 +21,9 @@ export function useCalendarLogic() {
 
     // 2. Localization State
     const [language, setLanguage] = useState<SupportedLanguage>(() => {
-    const stored = localStorage.getItem('calendar-lang') as SupportedLanguage;
+        const stored = localStorage.getItem('calendar-lang');
         // migrate 'dr' to 'fa'
-        return (stored === 'dr' ? 'fa' : stored) || 'fa';
+        return (stored === 'dr' ? 'fa' : (stored as SupportedLanguage)) || 'fa';
     });
 
     useEffect(() => {
