@@ -95,6 +95,13 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  overflow: hidden; /* Ensure image is clipped */
+}
+
+.about-profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .about-profile-name {
