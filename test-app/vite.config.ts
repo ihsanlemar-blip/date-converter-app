@@ -14,11 +14,35 @@ export default defineConfig({
         name: 'Lemar Date Converter',
         short_name: 'Lemar',
         description: 'Professional Miladi, Shamsi, and Qamari date converter with premium glassmorphic UI.',
-        theme_color: '#0f172a',
-        background_color: '#0f172a',
+        theme_color: '#eef2ff',
+        background_color: '#eef2ff',
         display: 'standalone',
+        display_override: ['window-controls-overlay', 'standalone', 'minimal-ui'],
         orientation: 'portrait-primary',
         categories: ['utilities', 'productivity'],
+        shortcuts: [
+          {
+            name: 'Solar Hijri (Shamsi)',
+            short_name: 'Shamsi',
+            description: 'Convert dates to Solar Hijri',
+            url: '/?view=shamsi',
+            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
+          },
+          {
+            name: 'Lunar Hijri (Qamari)',
+            short_name: 'Qamari',
+            description: 'Convert dates to Lunar Hijri',
+            url: '/?view=qamari',
+            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
+          },
+          {
+            name: 'Gregorian (Miladi)',
+            short_name: 'Miladi',
+            description: 'Convert dates to Gregorian',
+            url: '/?view=miladi',
+            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
+          }
+        ],
         icons: [
           {
             src: 'pwa-192x192.png',

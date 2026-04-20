@@ -42,11 +42,7 @@ export function useCalendarLogic() {
 
     const [theme, setTheme] = useState<string>(() => {
         const saved = localStorage.getItem('calendar-theme');
-        if (saved) return saved;
-        if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-            return 'light';
-        }
-        return 'dark';
+        return saved || 'light';
     });
 
     useEffect(() => {
@@ -63,7 +59,7 @@ export function useCalendarLogic() {
 
     // 4. Layout Management
     const [layout, setLayout] = useState<CalendarLayout>(() => {
-        return (localStorage.getItem('calendar-layout') as CalendarLayout) || 'grid';
+        return (localStorage.getItem('calendar-layout') as CalendarLayout) || 'stack';
     });
 
     useEffect(() => {
@@ -82,9 +78,7 @@ export function useCalendarLogic() {
     const [numberSystem, setNumberSystem] = useState<NumberSystem>(() => {
         const stored = localStorage.getItem('calendar-number-system') as NumberSystem;
         if (stored === 'latin' || stored === 'persian') return stored;
-        // Default: Eastern Arabic for RTL languages
-        const lang = (localStorage.getItem('calendar-lang') as SupportedLanguage) || 'fa';
-        return (lang === 'en') ? 'latin' : 'persian';
+        return 'latin';
     });
     useEffect(() => {
         localStorage.setItem('calendar-number-system', numberSystem);

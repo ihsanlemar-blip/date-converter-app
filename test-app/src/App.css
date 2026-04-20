@@ -17,7 +17,7 @@
   --accent:      #818cf8;
   --accent2:     rgba(129, 140, 248, 0.15);
   --shadow:      0 8px 32px rgba(0,0,0,0.35);
-  --radius:      14px;
+  --radius:      24px;
 }
 
 [data-theme="light"] {
@@ -30,7 +30,7 @@
   --accent:      #4f46e5;
   --accent2:     rgba(79, 70, 229, 0.1);
   --shadow:      0 8px 32px rgba(79, 70, 229, 0.12);
-  --radius:      14px;
+  --radius:      24px;
 }
 
 [data-theme="emerald"] {
@@ -43,7 +43,7 @@
   --accent:      #34d399;
   --accent2:     rgba(52, 211, 153, 0.15);
   --shadow:      0 8px 32px rgba(0,0,0,0.35);
-  --radius:      14px;
+  --radius:      24px;
 }
 
 /* 🌹 Rose — warm pink */
@@ -57,7 +57,7 @@
   --accent:      #fb7eb5;
   --accent2:     rgba(251, 126, 181, 0.18);
   --shadow:      0 8px 32px rgba(0,0,0,0.4);
-  --radius:      14px;
+  --radius:      24px;
 }
 
 /* 🌊 Ocean — deep teal/cyan */
@@ -71,7 +71,7 @@
   --accent:      #22d3ee;
   --accent2:     rgba(34, 211, 238, 0.15);
   --shadow:      0 8px 32px rgba(0,0,0,0.4);
-  --radius:      14px;
+  --radius:      24px;
 }
 
 /* 🌅 Sunset — amber/orange */
@@ -85,7 +85,7 @@
   --accent:      #f97316;
   --accent2:     rgba(249, 115, 22, 0.18);
   --shadow:      0 8px 32px rgba(0,0,0,0.4);
-  --radius:      14px;
+  --radius:      24px;
 }
 
 /* 🌌 Midnight — deep purple */
@@ -99,7 +99,7 @@
   --accent:      #a855f7;
   --accent2:     rgba(168, 85, 247, 0.18);
   --shadow:      0 8px 32px rgba(0,0,0,0.45);
-  --radius:      14px;
+  --radius:      24px;
 }
 
 /* ---- 2. BASE ---- */
@@ -296,7 +296,7 @@ body {
 .layout-grid    { grid-template-columns: repeat(3, 1fr); }
 
 /* -- Layout 3: Bento -- */
-/* Two small cards on the left, big Lunar Hijri hero on the right */
+/* Two small cards on the left, big Solar Hijri hero on the right */
 .layout-bento {
   grid-template-columns: 1fr 1.7fr;
   grid-template-rows: auto auto;
@@ -308,14 +308,14 @@ body {
   padding: 12px 14px;
   gap: 8px;
 }
-.layout-bento .cal-shamsi {
+.layout-bento .cal-qamari {
   grid-column: 1;
   grid-row: 2;
   padding: 12px 14px;
   gap: 8px;
 }
-/* Hero: qamari spans full right column */
-.layout-bento .cal-qamari {
+/* Hero: shamsi spans full right column */
+.layout-bento .cal-shamsi {
   grid-column: 2;
   grid-row: span 2;
   border-color: var(--accent);
@@ -325,7 +325,7 @@ body {
   justify-content: space-between;
 }
 /* Big year */
-.layout-bento .cal-qamari .output-year {
+.layout-bento .cal-shamsi .output-year {
   font-family: 'Space Grotesk', 'Inter', sans-serif;
   font-size: 3rem;
   font-weight: 700;
@@ -336,7 +336,7 @@ body {
   background: none;
 }
 /* Day · Month below year */
-.layout-bento .cal-qamari .output-daymonth {
+.layout-bento .cal-shamsi .output-daymonth {
   font-family: 'JetBrains Mono', monospace;
   font-size: 1rem;
   font-weight: 500;
@@ -346,7 +346,7 @@ body {
 }
 /* Small secondary card text */
 .layout-bento .cal-miladi .output-text,
-.layout-bento .cal-shamsi .output-text {
+.layout-bento .cal-qamari .output-text {
   font-size: 0.95rem;
 }
 
@@ -784,26 +784,64 @@ body {
 @media (max-width: 600px) {
   .header { padding: 0.75rem 1rem; }
   .lemar-logo-wrap { max-width: 160px; }
-  .calendars-grid { padding: 0.75rem; gap: 0.75rem; }
+  .calendars-grid { padding: 0.5rem; gap: 0.75rem; }
   .footer-bar { bottom: 12px; padding: 4px 12px; width: auto; max-width: 90%; }
   .away-value { font-size: 11px; }
+
+  /* Force single column for bento and grid on mobile */
+  .layout-bento, .layout-grid, .layout-compact {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+  }
+  .layout-bento .calendar-card {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    padding: 1.25rem !important;
+  }
+  /* Ensure Lunar Hijri (Qamari) card doesn't overflow */
+  .cal-qamari {
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 
-@media (max-width: 640px) {
+/* Widen for desktops */
+@media (min-width: 1024px) {
   .app-container.layout-grid,
   .app-container.layout-compact,
   .app-container.layout-bento {
-    max-width: 440px;
+    max-width: 1100px;
   }
-  .layout-grid,
-  .layout-compact,
-  .layout-bento {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: none !important;
+}
+
+/* Large Screen Zoom & Proportional Scaling */
+@media (min-width: 1400px) {
+  :root {
+    --radius: 32px;
   }
-  .layout-bento .cal-shamsi {
-    grid-row: auto !important;
+  .app-container.layout-grid,
+  .app-container.layout-compact,
+  .app-container.layout-bento {
+    max-width: 1300px;
   }
+  body {
+    font-size: 18px;
+  }
+  .calendar-card {
+    padding: 1.5rem;
+  }
+  .layout-bento .cal-shamsi .output-year {
+    font-size: 4rem !important;
+  }
+  .brand-name {
+    font-size: 1.8rem;
+  }
+  .header {
+    padding: 1.25rem 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
   .layout-linear .calendar-card {
     flex-direction: column;
     height: auto;

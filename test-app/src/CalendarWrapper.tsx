@@ -133,6 +133,18 @@ export function CalendarWrapper() {
     return () => clearTimeout(t);
   }, [toastMessage]);
 
+  /* Handle PWA shortcut URL params */
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const view = params.get('view');
+    if (view === 'miladi') setCarouselActive(0);
+    else if (view === 'shamsi') setCarouselActive(1);
+    else if (view === 'qamari') setCarouselActive(2);
+    
+    // Clean up URL if needed (optional)
+    if (view) window.history.replaceState({}, '', '/');
+  }, [setCarouselActive]);
+
   const copy = (d: { year: number; month: number; day: number }) =>
     copyToClipboard(`${format(d.year)}/${format(d.month)}/${format(d.day)}`);
 
@@ -244,7 +256,7 @@ export function CalendarWrapper() {
           {cals.map((cal, idx) => visible(idx) && (
             <div key={cal.id} className={`calendar-card glass cal-${cal.type}`}>
               {/* Bento hero: qamari gets big year treatment */}
-              {layout === 'bento' && cal.type === 'qamari' ? (
+              {layout === 'bento' && cal.type === 'shamsi' ? (
                 <>
                   <div className="card-header">
                     <span className="calendar-label">{l(cal.type)}</span>
